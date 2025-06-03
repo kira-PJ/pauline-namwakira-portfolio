@@ -21,11 +21,27 @@ export default function Home() {
     <>
       <Helmet>
         <title>Pauline Namwakira - AWS Authorized Instructor</title>
-        <meta name="description" content="Pauline Namwakira is an AWS Authorized Instructor based in Nairobi, Kenya, specializing in cloud architecture, security, and training. Explore courses, certifications, and cloud solutions." />
+        <meta name="description" content="Pauline Namwakira is an AWS Authorized Instructor with 4+ years of experience, based in Nairobi, Kenya, specializing in cloud architecture, security, and training. Explore courses, certifications, and cloud solutions." />
         <meta property="og:title" content="Pauline Namwakira - AWS Authorized Instructor" />
-        <meta property="og:description" content="Expert AWS training and cloud computing solutions by Pauline Namwakira, an AWS Authorized Instructor with comprehensive cloud expertise." />
+        <meta property="og:description" content="Expert AWS training and cloud computing solutions by Pauline Namwakira, an AWS Authorized Instructor with 4+ years of comprehensive cloud expertise." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.paulinenamwakira.com" />
+        <meta property="og:url" content="https://paulinenamwakira.com" />
+        <meta property="og:image" content="https://paulinenamwakira.com/profile-social.svg?v=20250531" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Pauline Namwakira - AWS Authorized Instructor" />
+        <meta property="og:site_name" content="Pauline Namwakira Portfolio" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pauline Namwakira - AWS Authorized Instructor" />
+        <meta name="twitter:description" content="Expert AWS training and cloud computing solutions by Pauline Namwakira, an AWS Authorized Instructor with 4+ years of comprehensive cloud expertise." />
+        <meta name="twitter:image" content="https://paulinenamwakira.com/profile-social.svg?v=20250531" />
+        <meta name="twitter:image:alt" content="Pauline Namwakira - AWS Authorized Instructor" />
+        
+        {/* Additional meta tags */}
+        <meta name="author" content="Pauline Namwakira" />
+        <meta name="keywords" content="AWS, cloud computing, training, instructor, certification, Nairobi, Kenya, cloud architecture" />
       </Helmet>
     
       <GalaxyBackground />
