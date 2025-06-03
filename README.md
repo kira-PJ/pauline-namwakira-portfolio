@@ -39,7 +39,6 @@ A professional portfolio website showcasing AWS expertise, certifications, and t
 - DynamoDB
 - Route 53 DNS
 - Certificate Manager (ACM)
-- API Gateway
 
 ## 📱 Responsive Features
 - Mobile-first design approach
