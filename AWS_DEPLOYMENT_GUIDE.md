@@ -52,15 +52,9 @@ This comprehensive guide documents the complete deployment of a professional por
                                │
                                ▼
                        ┌──────────────────┐    ┌─────────────────┐
-                       │   API Gateway    │───▶│  Lambda Function│
-                       │  (API Endpoints) │    │  (Node.js API)  │
+                       │  Lambda Functions│───▶│   DynamoDB      │
+                       │ (Direct Invoke)  │    │   (Database)    │
                        └──────────────────┘    └─────────────────┘
-                                                       │
-                                                       ▼
-                                               ┌─────────────────┐
-                                               │   DynamoDB      │
-                                               │   (Database)    │
-                                               └─────────────────┘
 ```
 
 ### AWS Services Used
@@ -437,56 +431,16 @@ aws lambda create-function \
   --memory-size 256
 ```
 
-### 5. API Gateway Setup
+### 5. Lambda Function URLs (Serverless API)
 ```bash
-# Create REST API
-API_ID=$(aws apigateway create-rest-api \
-  --name portfolio-api \
-  --description "Portfolio website API" \
-  --query 'id' --output text)
-
-# Get root resource ID
-ROOT_ID=$(aws apigateway get-resources \
-  --rest-api-id $API_ID \
-  --query 'items[0].id' --output text)
-
-# Create {proxy+} resource
-RESOURCE_ID=$(aws apigateway create-resource \
-  --rest-api-id $API_ID \
-  --parent-id $ROOT_ID \
-  --path-part '{proxy+}' \
-  --query 'id' --output text)
-
-# Create ANY method
-aws apigateway put-method \
-  --rest-api-id $API_ID \
-  --resource-id $RESOURCE_ID \
-  --http-method ANY \
-  --authorization-type NONE
-
-# Set up Lambda integration
-LAMBDA_ARN="arn:aws:lambda:us-east-1:$(aws sts get-caller-identity --query Account --output text):function:portfolio-api"
-
-aws apigateway put-integration \
-  --rest-api-id $API_ID \
-  --resource-id $RESOURCE_ID \
-  --http-method ANY \
-  --type AWS_PROXY \
-  --integration-http-method POST \
-  --uri "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/$LAMBDA_ARN/invocations"
-
-# Deploy API
-aws apigateway create-deployment \
-  --rest-api-id $API_ID \
-  --stage-name prod
-
-# Grant API Gateway permission to invoke Lambda
-aws lambda add-permission \
+# Create function URL for direct Lambda invocation
+aws lambda create-function-url-config \
   --function-name portfolio-api \
-  --statement-id api-gateway-invoke \
-  --action lambda:InvokeFunction \
-  --principal apigateway.amazonaws.com \
-  --source-arn "arn:aws:execute-api:us-east-1:$(aws sts get-caller-identity --query Account --output text):$API_ID/*/*"
+  --config AuthType=NONE,Cors='{"AllowCredentials":false,"AllowHeaders":["*"],"AllowMethods":["*"],"AllowOrigins":["*"],"ExposeHeaders":["*"],"MaxAge":86400}' \
+  --query 'FunctionUrl'
+
+# Note: Your portfolio uses direct Lambda invocation through the frontend,
+# not API Gateway, for simplified serverless architecture
 ```
 
 ---
